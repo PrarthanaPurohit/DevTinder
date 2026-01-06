@@ -2,6 +2,7 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 app.use(express.json()); //parsing json request body
+const cors = require("cors");
 
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
@@ -9,6 +10,7 @@ const requestRouter = require("./routes/requests");
 const userRouter = require("./routes/user");
 
 //check withing every route one by one
+app.use(cors());
 app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
