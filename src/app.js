@@ -10,7 +10,9 @@ const requestRouter = require("./routes/requests");
 const userRouter = require("./routes/user");
 
 //check withing every route one by one
-app.use(cors());
+app.use(cors(
+  {origin: "http://localhost:5173", credentials: true}
+));
 app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
