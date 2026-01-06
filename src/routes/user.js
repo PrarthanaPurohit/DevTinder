@@ -60,6 +60,12 @@ userRouter.get("/user/feed", userAuth, async (req,res) => {
     try{
         const loggedInUser = req.user;
 
+        //Pagination data
+        const page = parseInt(req.query.page) || 1;
+        let limit = parseInt(req.query.limit) || 10;
+        if(limit > 100) limit = 50; //max limit 500 so as to not overload server
+        const skip = (page - 1) * limit;
+
         // avoid self, connections- ignored, pending req, rejected, accepted
         
         //find all connection req user sent or received
@@ -83,9 +89,10 @@ userRouter.get("/user/feed", userAuth, async (req,res) => {
                 { _id: { $ne: loggedInUser._id }}
         ]
             
-        }).select("firstName lastName age gender photoUrl about");
+        }).select("firstName lastName age gender photoUrl about")  //protect sensitive info
+        .skip(skip).limit(limit);  //pagination
 
-        res.send(feedUsers);
+        res.json({data: feedUsers});
             
     }
     catch(err){
