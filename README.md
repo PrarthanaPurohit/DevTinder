@@ -1,4 +1,4 @@
-# DevTinder
+# DevConnect
 
 A developer networking platform backend API that enables developers to connect, interact, and build professional relationships - think Tinder, but for developers!
 
